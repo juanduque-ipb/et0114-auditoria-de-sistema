@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoría de Sistemas · ET0114 · I.U. Pascual Bravo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0e4525;
+    --navy-dark:#0a331c;
+    --green:#1a6b3c;
+    --green-2:#2e8b57;
+    --gold:#e8a020;
+    --gold-dark:#b07800;
+    --bg:#f4f6f4;
+    --card:#ffffff;
+    --border:#e5e8e5;
+    --text:#16241c;
+    --muted:#5c6b62;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+  a{color:inherit;}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px;}
+  h1,h2,h3{font-weight:900;letter-spacing:-0.02em;}
+
+  nav{background:var(--navy);color:#fff;padding:14px 0;position:sticky;top:0;z-index:20;}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  nav .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:0.92rem;}
+  nav .code{background:var(--gold);color:#241900;font-weight:800;font-size:0.75rem;padding:4px 10px;border-radius:6px;}
+  nav .links a{color:#cfe0d4;text-decoration:none;font-size:0.84rem;margin-left:20px;}
+  nav .links a:hover{color:#fff;}
+
+  header.hero{background:linear-gradient(155deg,var(--green) 0%,var(--green-2) 100%);color:#fff;padding:40px 0 56px;}
+  .logos{display:flex;gap:16px;align-items:center;margin-bottom:22px;flex-wrap:wrap;}
+  .logos img{height:44px;background:#fff;border-radius:8px;padding:4px 8px;}
+  .breadcrumb{color:#dcefe2;font-size:0.82rem;margin-bottom:6px;}
+  .role-line{font-size:0.95rem;color:#f0f7f2;margin-bottom:16px;}
+  .role-line b{color:#fff;}
+  .kicker{display:inline-block;background:rgba(232,160,32,.2);color:var(--gold);border:1px solid rgba(232,160,32,.5);padding:5px 14px;border-radius:999px;font-size:0.72rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:16px;font-weight:700;}
+  h1{font-size:2.4rem;margin:0 0 14px;line-height:1.1;color:#fff;}
+  h1 .accent{color:var(--gold);}
+  .tagline{color:#eaf5ee;max-width:640px;font-size:1.05rem;margin-bottom:26px;}
+  .stat-pills{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:28px;}
+  .stat-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.18);border-radius:10px;padding:9px 14px;font-size:0.84rem;}
+  .stat-pill b{color:var(--gold);font-weight:800;}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{display:inline-block;padding:12px 20px;border-radius:9px;font-size:0.88rem;font-weight:700;text-decoration:none;}
+  .btn-gold{background:var(--gold);color:#241900;}
+  .btn-ghost{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.4);color:#fff;}
+
+  section{padding:56px 0;}
+  section.on-dark{background:var(--navy);color:#fff;}
+  section.on-cream{background:#fff8ec;}
+  .eyebrow{color:var(--gold-dark);text-transform:uppercase;letter-spacing:.06em;font-size:0.75rem;font-weight:800;margin-bottom:8px;}
+  .on-dark .eyebrow{color:var(--gold);}
+  h2{font-size:1.7rem;margin:0 0 12px;}
+  h2 .accent{color:var(--green);}
+  .on-dark h2 .accent{color:var(--gold);}
+  .lead{color:var(--muted);max-width:700px;margin-bottom:34px;font-size:1rem;}
+  .on-dark .lead{color:#dcefe2;}
+
+  .grid-cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+  .case-card{background:var(--card);border:1px solid var(--border);border-top:4px solid var(--green-2);border-radius:var(--radius);padding:20px;}
+  .case-card .emoji{font-size:1.7rem;}
+  .case-card .who{font-size:0.74rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin:10px 0 4px;font-weight:700;}
+  .case-card .what{font-size:1.02rem;font-weight:800;margin-bottom:10px;}
+  .case-card .tag{display:inline-block;background:var(--gold);color:#241900;font-size:0.72rem;font-weight:700;padding:4px 10px;border-radius:6px;margin-bottom:10px;}
+  .case-card p{font-size:0.87rem;color:var(--muted);margin:0;}
+  .closing-note{margin-top:28px;font-size:0.98rem;color:var(--text);background:var(--card);border:1px solid var(--border);padding:18px 22px;border-radius:12px;border-left:4px solid var(--gold);}
+
+  .units{display:flex;flex-direction:column;gap:20px;}
+  .unit-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:0;display:flex;overflow:hidden;}
+  .unit-side{width:110px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-weight:900;}
+  .unit-side small{font-size:0.65rem;text-transform:uppercase;letter-spacing:.06em;opacity:.85;}
+  .unit-side .num{font-size:2.1rem;line-height:1;}
+  .unit-1 .unit-side{background:var(--green);}
+  .unit-2 .unit-side{background:var(--green-2);}
+  .unit-body{padding:22px 24px;flex:1;}
+  .unit-meta{font-size:0.76rem;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;font-weight:700;margin-bottom:6px;}
+  .unit-card h3{margin:2px 0 10px;font-size:1.2rem;}
+  .unit-card p{color:var(--muted);font-size:0.92rem;margin-bottom:14px;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 12px;font-size:0.79rem;color:var(--text);}
+
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:32px;}
+  .info-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:18px;text-align:center;}
+  .info-card .num{font-size:1.5rem;font-weight:900;color:var(--gold);}
+  .info-card .label{font-size:0.76rem;color:#cfe0d4;margin-top:4px;text-transform:uppercase;letter-spacing:.03em;}
+  .guiding-q{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:var(--radius);padding:26px 28px;font-size:1.05rem;font-style:italic;}
+
+  .eval-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;}
+  .eval-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:22px;}
+  .eval-pct{font-size:1.9rem;font-weight:900;color:var(--green);}
+  .eval-title{font-weight:800;margin:2px 0 14px;}
+  .eval-item{display:flex;justify-content:space-between;gap:10px;font-size:0.88rem;padding:9px 0;border-bottom:1px solid var(--border);}
+  .eval-item:last-of-type{border-bottom:none;}
+  .eval-item b{color:var(--gold-dark);white-space:nowrap;}
+  .eval-date{margin-top:14px;font-size:0.78rem;color:var(--gold-dark);background:#fff3e0;border:1px solid #f0dcb8;border-radius:8px;padding:7px 11px;display:inline-block;font-weight:600;}
+  .disclaimer{font-size:0.8rem;color:var(--muted);margin-top:18px;font-style:italic;}
+
+  table.calendar{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;font-size:0.87rem;}
+  table.calendar th{background:var(--navy);color:#fff;text-align:left;padding:12px 14px;font-size:0.72rem;text-transform:uppercase;letter-spacing:.04em;}
+  table.calendar td{padding:14px;border-bottom:1px solid var(--border);vertical-align:top;}
+  table.calendar tr:last-child td{border-bottom:none;}
+  table.calendar tr.skipped{background:#fafafa;color:var(--muted);font-style:italic;}
+  table.calendar tr.today{background:#fff8ec;}
+  .badge-today{background:var(--gold);color:#241900;font-size:0.65rem;font-weight:800;padding:3px 9px;border-radius:999px;margin-left:8px;}
+  .badge-eval{background:var(--green);color:#fff;font-size:0.68rem;font-weight:700;padding:3px 9px;border-radius:999px;display:inline-block;}
+  .badge-entrega{background:#ede7f6;color:#5e35b1;font-size:0.68rem;font-weight:700;padding:3px 9px;border-radius:999px;display:inline-block;}
+  .sem-num.u1{color:var(--green);font-weight:900;}
+  .sem-num.u2{color:var(--green-2);font-weight:900;}
+  .topic-unit{font-size:0.7rem;text-transform:uppercase;letter-spacing:.03em;font-weight:800;color:var(--gold-dark);margin-bottom:3px;}
+  .topic-title{font-weight:700;margin-bottom:3px;}
+  .topic-sub{color:var(--muted);font-size:0.83rem;}
+
+  .project-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;}
+  .project-card{background:var(--card);border:1px solid var(--border);border-left:4px solid var(--green-2);border-radius:var(--radius);padding:20px;}
+  .project-card:nth-child(3n+2){border-left-color:var(--gold);}
+  .project-card:nth-child(3n+3){border-left-color:var(--green);}
+  .project-card .emoji{font-size:1.5rem;margin-bottom:8px;display:block;}
+  .project-card h4{margin:0 0 8px;font-size:0.97rem;}
+  .project-card p{margin:0;font-size:0.86rem;color:var(--muted);}
+
+  .policy-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;}
+  .policy-card{border-radius:var(--radius);padding:20px;border-top:4px solid;}
+  .policy-card.ok{background:#eaf6ee;border-color:#2e8b57;}
+  .policy-card.no{background:#fdecea;border-color:#c0392b;}
+  .policy-card.verify{background:#eceaf7;border-color:#5e4bc7;}
+  .policy-card.key{background:#fff8ec;border-color:var(--gold);}
+  .policy-card h4{margin:0 0 12px;font-size:0.96rem;}
+  .policy-card.ok h4{color:#1f6b3c;}
+  .policy-card.no h4{color:#a4291b;}
+  .policy-card.verify h4{color:#453a99;}
+  .policy-card.key h4{color:var(--gold-dark);}
+  .policy-card ul{margin:0;padding-left:18px;font-size:0.86rem;color:var(--text);}
+  .policy-card li{margin-bottom:9px;padding-bottom:9px;border-bottom:1px dashed rgba(0,0,0,.08);}
+  .policy-card li:last-child{border-bottom:none;margin-bottom:0;}
+
+  footer{background:var(--navy);color:#a9c4b1;padding:34px 0;text-align:center;font-size:0.85rem;}
+  footer img{height:38px;background:#fff;border-radius:6px;padding:4px 8px;margin-bottom:16px;}
+  footer .divider{width:40px;height:3px;background:var(--gold);margin:0 auto 18px;border-radius:2px;}
+  footer b{color:#fff;}
+  footer .line{margin-bottom:8px;}
+
+  @media (max-width:640px){
+    .wrap{padding:0 16px;}
+    nav .wrap{gap:6px;}
+    nav .links a{margin-left:0;margin-right:14px;}
+    h1{font-size:1.7rem;}
+    h2{font-size:1.35rem;}
+    section{padding:34px 0;}
+    header.hero{padding:32px 0 40px;}
+    .stat-pills{gap:8px;}
+    .stat-pill{padding:8px 12px;font-size:0.78rem;}
+    .cta{flex-direction:column;}
+    .cta .btn{text-align:center;}
+    .unit-card{flex-direction:column;}
+    .unit-side{width:100%;flex-direction:row;gap:8px;padding:12px;}
+    .eval-pct{font-size:1.6rem;}
+    table.calendar{font-size:0.8rem;}
+    table.calendar th,table.calendar td{padding:9px 8px;}
+    .topic-sub{font-size:0.78rem;}
+    .info-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="brand"><span class="code">ET0114</span> Auditoría de Sistemas</div>
+    <div class="links"><a href="#calendario">Calendario</a><a href="#evaluacion">Evaluación</a><a href="#proyecto">Proyecto final</a></div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="logos">
+      <img src="https://pascualbravo.edu.co/wp-content/uploads/2026/03/Logo-I.U.Pascual-Bravo_500-X-500-px.png" alt="Pascual Bravo">
+      <img src="https://pascualbravo.edu.co/wp-content/uploads/2023/06/cropped-Imagotipo-horizontal_acreditados.png" alt="Acreditada MEN 2022">
+    </div>
+    <div class="breadcrumb">Facultad de Ingeniería · Dpto. Electrónica</div>
+    <div class="role-line"><b>Tecnología en Desarrollo de Software</b> · Modalidad presencial · Semestre 2026-II · Ago – Dic</div>
+    <span class="kicker">ET0114 · Plan académico</span>
+    <h1>Auditoría <span class="accent">de Sistemas</span></h1>
+    <p class="tagline">Aprender a mirar los sistemas de información con ojo crítico: identificar riesgos, aplicar normas internacionales y demostrar — con evidencia — si una organización cumple o no con lo que promete.</p>
+    <div class="stat-pills">
+      <div class="stat-pill"><b>2</b> créditos</div>
+      <div class="stat-pill"><b>Viernes</b> · 16 sesiones</div>
+      <div class="stat-pill"><b>2</b> unidades didácticas</div>
+      <div class="stat-pill"><b>96 h</b> totales</div>
+      <div class="stat-pill">Prerrequisito: <b>Gestión de proyectos informáticos</b></div>
+      <div class="stat-pill">Docente: <b>Mario Briceño Torres</b></div>
+    </div>
+    <div class="cta">
+      <a class="btn btn-gold" href="#calendario">📅 Ver calendario de clases →</a>
+      <a class="btn btn-ghost" href="#casos">¿Para qué sirve esto? ↓</a>
+    </div>
+  </div>
+</header>
+
+<section id="casos">
+  <div class="wrap">
+    <div class="eyebrow">Motivación</div>
+    <h2>¿Para qué sirve esto en la <span class="accent">vida real</span>?</h2>
+    <p class="lead">La auditoría de sistemas no es un trámite de papeleo — es la diferencia entre saber si tus sistemas son confiables o descubrirlo cuando ya es tarde.</p>
+    <div class="grid-cases">
+      <div class="case-card">
+        <div class="emoji">🏦</div>
+        <div class="who">Bancos y fintechs</div>
+        <div class="what">Certificarse antes de procesar pagos con tarjeta</div>
+        <span class="tag">Cumplimiento normativo</span>
+        <p>Antes de operar, una entidad financiera debe demostrar que cumple estándares como PCI-DSS o ISO 27001. El auditor de sistemas revisa los controles técnicos y emite el informe que certifica —o no— ese cumplimiento.</p>
+      </div>
+      <div class="case-card">
+        <div class="emoji">🔓</div>
+        <div class="who">Filtraciones masivas de datos</div>
+        <div class="what">Detectar la falla antes de que la exploten</div>
+        <span class="tag">Auditoría de vulnerabilidades</span>
+        <p>Casos como el de Equifax mostraron qué pasa cuando nadie audita a tiempo un sistema con datos sensibles. Una auditoría periódica revisa permisos, parches y configuraciones para cerrar huecos antes que un atacante los use.</p>
+      </div>
+      <div class="case-card">
+        <div class="emoji">☁️</div>
+        <div class="who">AWS · Azure · Google Cloud</div>
+        <div class="what">Certificaciones SOC 2 e ISO 27001 de sus centros de datos</div>
+        <span class="tag">Auditoría de infraestructura</span>
+        <p>Los proveedores de nube se someten a auditorías externas constantes. Sin ese sello de auditoría, ninguna empresa confiaría sus sistemas críticos a un tercero.</p>
+      </div>
+      <div class="case-card">
+        <div class="emoji">🧾</div>
+        <div class="who">DIAN · Superintendencia Financiera</div>
+        <div class="what">Exigir trazabilidad en los sistemas contables</div>
+        <span class="tag">Controles internos</span>
+        <p>Los entes de control piden evidencia de que el software financiero no se puede alterar sin dejar rastro. De verificar eso, con normas como COSO, se encarga la auditoría de sistemas.</p>
+      </div>
+      <div class="case-card">
+        <div class="emoji">🦠</div>
+        <div class="who">Incidentes de ransomware</div>
+        <div class="what">Reconstruir qué pasó y por qué fallaron los controles</div>
+        <span class="tag">Auditoría forense</span>
+        <p>Después de un ataque como WannaCry, un auditor revisa registros, respaldos y políticas para determinar la causa raíz y evitar que se repita.</p>
+      </div>
+      <div class="case-card">
+        <div class="emoji">🛒</div>
+        <div class="who">Plataformas e-commerce</div>
+        <div class="what">Proteger transacciones y datos personales</div>
+        <span class="tag">Apps y APIs</span>
+        <p>Antes de lanzar una funcionalidad de pagos, se audita el código, los accesos y el manejo de datos personales (habeas data) para que el usuario final no pague las consecuencias de un error.</p>
+      </div>
+    </div>
+    <div class="closing-note">Auditar no es desconfiar por desconfiar: es la forma en que una organización demuestra —con evidencia, no con promesas— que sus sistemas son seguros, confiables y cumplen la norma.</div>
+  </div>
+</section>
+
+<section style="background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);">
+  <div class="wrap">
+    <div class="eyebrow">Contenido del curso</div>
+    <h2>Dos unidades, <span class="accent">un solo objetivo</span></h2>
+    <p class="lead">Primero entendemos los principios y el marco normativo; después los aplicamos sobre un caso real hasta producir un informe de auditoría completo.</p>
+    <div class="units">
+      <div class="unit-card unit-1">
+        <div class="unit-side"><small>Unidad</small><span class="num">1</span></div>
+        <div class="unit-body">
+          <div class="unit-meta">Sesiones 1–8</div>
+          <h3>Principios de la auditoría de sistemas</h3>
+          <p>Partimos de las bases: qué hace un auditor de sistemas, qué normas y estándares internacionales existen, cuáles son las fases de una auditoría y cómo se identifican riesgos, amenazas y vulnerabilidades sobre los activos de información.</p>
+          <div class="chips">
+            <span class="chip">Perfil y habilidades del auditor</span>
+            <span class="chip">Normas y estándares (COBIT, ISO 27001, ITIL)</span>
+            <span class="chip">Fases de la auditoría</span>
+            <span class="chip">Elementos y alcance de la auditoría</span>
+            <span class="chip">Riesgos, controles, amenazas y vulnerabilidades</span>
+          </div>
+        </div>
+      </div>
+      <div class="unit-card unit-2">
+        <div class="unit-side"><small>Unidad</small><span class="num">2</span></div>
+        <div class="unit-body">
+          <div class="unit-meta">Sesiones 9–16</div>
+          <h3>Ejecución y resultados de la auditoría</h3>
+          <p>Aplicamos lo aprendido sobre un caso de estudio: diseñamos pruebas de cumplimiento, ejecutamos la auditoría, recolectamos evidencias y hallazgos, y consolidamos todo en un informe de auditoría con no conformidades y recomendaciones — el entregable que de verdad usa una organización.</p>
+          <div class="chips">
+            <span class="chip">Metodologías de auditoría (ISACA)</span>
+            <span class="chip">Plan de auditoría (fase de planeación)</span>
+            <span class="chip">Pruebas y artefactos de auditoría (fase de ejecución)</span>
+            <span class="chip">Evidencias y hallazgos</span>
+            <span class="chip">Informe de auditoría y recomendaciones</span>
+            <span class="chip">Sustentación de resultados</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="on-dark">
+  <div class="wrap">
+    <div class="eyebrow">Datos clave</div>
+    <h2>Información <span class="accent">general</span></h2>
+    <div class="info-grid">
+      <div class="info-card"><div class="num">21 Ago</div><div class="label">Primera clase</div></div>
+      <div class="info-card"><div class="num">04 Dic</div><div class="label">Última clase</div></div>
+      <div class="info-card"><div class="num">2 h</div><div class="label">Acompañamiento / sem</div></div>
+      <div class="info-card"><div class="num">4 h</div><div class="label">Trabajo autónomo / sem</div></div>
+      <div class="info-card"><div class="num">30·30·40</div><div class="label">Distribución de notas</div></div>
+    </div>
+    <div class="guiding-q">
+      <b style="color:var(--gold);font-style:normal;">Pregunta que guía el semestre:</b> ¿cómo identificar, evaluar y controlar los riesgos de un sistema de información aplicando normas y metodologías de auditoría, de forma que el resultado final permita a una organización demostrar si sus operaciones tecnológicas cumplen —o no— con los estándares esperados?
+    </div>
+  </div>
+</section>
+
+<section id="evaluacion">
+  <div class="wrap">
+    <div class="eyebrow">Evaluación</div>
+    <h2>¿Cómo te <span class="accent">evaluamos</span>?</h2>
+    <p class="lead">No memorización — evidencia. Cada entregable es algo que un auditor real produciría: matrices de riesgo, planes de auditoría e informes con hallazgos.</p>
+    <div class="eval-grid">
+      <div class="eval-card">
+        <div class="eval-pct">30%</div>
+        <div class="eval-title">Corte 1 · Unidad 1 — Principios y marco normativo</div>
+        <div class="eval-item"><span>Quiz conceptual (perfil, normas, fases)</span><b>10%</b></div>
+        <div class="eval-item"><span>Ensayo: habilidades y rol del auditor de sistemas</span><b>10%</b></div>
+        <div class="eval-item"><span>Avance de matriz de riesgos (identificación inicial)</span><b>10%</b></div>
+        <div class="eval-date">⚠ Semana 5 · 18 sep 2026</div>
+      </div>
+      <div class="eval-card">
+        <div class="eval-pct">30%</div>
+        <div class="eval-title">Corte 2 · Cierre Unidad 1 + apertura Unidad 2</div>
+        <div class="eval-item"><span>Matriz de riesgos, amenazas y vulnerabilidades (completa)</span><b>15%</b></div>
+        <div class="eval-item"><span>Portafolio unidad 1</span><b>5%</b></div>
+        <div class="eval-item"><span>Quiz de metodologías de auditoría (ISACA)</span><b>10%</b></div>
+        <div class="eval-date">⚠ Semana 10 · 23 oct 2026</div>
+      </div>
+      <div class="eval-card">
+        <div class="eval-pct">40%</div>
+        <div class="eval-title">Corte 3 · Unidad 2 — Ejecución y resultados</div>
+        <div class="eval-item"><span>Plan de auditoría (fase de planeación)</span><b>10%</b></div>
+        <div class="eval-item"><span>Pruebas y evidencias de auditoría (fase de ejecución)</span><b>10%</b></div>
+        <div class="eval-item"><span>Informe final: hallazgos, no conformidades, recomendaciones</span><b>15%</b></div>
+        <div class="eval-item"><span>Sustentación en vivo del informe</span><b>5%</b></div>
+        <div class="eval-date">⚠ Semana 16 · 04 dic 2026</div>
+      </div>
+    </div>
+    <div class="disclaimer">La matriz académica no fija qué entregable va en cada corte — la distribución 30/30/40 la definiste tú; la ubicación de cada entregable dentro de ese corte es una propuesta. Ajústala si lo necesitas.</div>
+  </div>
+</section>
+
+<section style="background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border);" id="calendario">
+  <div class="wrap">
+    <div class="eyebrow">Semana a semana</div>
+    <h2>Calendario de <span class="accent">clases</span></h2>
+    <p class="lead">Viernes · 2 horas · Semestre agosto – diciembre 2026. Actualiza el tema y el estado cada semana según avance el curso.</p>
+    <div style="overflow-x:auto;border-radius:var(--radius);">
+    <table class="calendar">
+      <thead>
+        <tr><th>Sem.</th><th>Fecha</th><th>Tema</th><th>Estado</th></tr>
+      </thead>
+      <tbody>
+        <tr class="skipped">
+          <td>—</td><td>14 Ago</td>
+          <td><div class="topic-title">Sin clase</div><div class="topic-sub">Clase cancelada. El curso arranca el 21 de agosto.</div></td>
+          <td>Omitida</td>
+        </tr>
+        <tr class="today">
+          <td class="sem-num u1">1</td><td>21 Ago<span class="badge-today">HOY</span></td>
+          <td><div class="topic-unit">U1 · Apertura</div><div class="topic-title">Presentación del módulo</div><div class="topic-sub">Diagnóstico de saberes previos: ¿qué es auditar un sistema de información?</div></td>
+          <td>En curso</td>
+        </tr>
+        <tr>
+          <td class="sem-num u1">2</td><td>28 Ago</td>
+          <td><div class="topic-unit">U1 · Perfil del auditor</div><div class="topic-title">Habilidades y rol del auditor</div><div class="topic-sub">Actitud independiente y honesta; rol del auditor dentro de una organización.</div></td>
+          <td>Pendiente</td>
+        </tr>
+        <tr>
+          <td class="sem-num u1">3</td><td>04 Sep</td>
+          <td><div class="topic-unit">U1 · Normas y estándares</div><div class="topic-title">Marcos de referencia internacionales</div><div class="topic-sub">Normas aplicadas a operaciones tecnológicas (COBIT, ISO 27001, ITIL).</div></td>
+          <td>Pendiente</td>
+        </tr>
+        <tr>
+          <td class="sem-num u1">4</td><td>11 Sep</td>
+          <td><div class="topic-unit">U1 · Fases de la auditoría</div><div class="topic-title">Planeación, ejecución, informe, seguimiento</div><div class="topic-sub">Cómo se concerta el alcance funcional de una auditoría.</div></td>
+          <td>Pendiente</td>
+        </tr>
+        <tr>
+          <td class="sem-num u1">5</td><td>18 Sep</td>
+          <td><div class="topic-unit">U1 · Cierre parcial</div><div class="topic-title">Elementos de la auditoría + Quiz</div><div class="topic-sub">Elementos y alcance funcional. Quiz conceptual + ensayo del perfil del auditor.</div></td>
+          <td><span class="badge-eval">Evaluación 30%</span></td>
+        </tr>
+        <tr>
+          <td class="sem-num u1">6</td><td>25 Sep</td>
+          <td><div class="topic-unit">U1 · Riesgos y controles</div><div class="topic-title">Riesgos, amenazas y vulnerabilidades</div><div class="topic-sub">Conceptualización de riesgo, control, amenaza y vulnerabilidad.</div></td>
+          <td>Pendiente</td>
+        </tr>
+        <tr>
+          <td class="sem-num u1">7</td><td>02 Oct</td>
+          <td><div class="topic-unit">U1 · Taller</div><div class="topic-title">Matriz de análisis de riesgos</div><div class="topic-sub">Construcción de la matriz de riesgos, amenazas y vulnerabilidades sobre un caso de estudio.</div></td>
+          <td><span class="badge-entrega">Entrega</span></td>
+        </tr>
+        <tr>
+          <td class="sem-num u1">8</td><td>09 Oct</td>
+          <td><div class="topic-unit">U1 · Cierre</div><div class="topic-title">Portafolio unidad 1</div><div class="topic-sub">Consolidación de la matriz de riesgos y el ensayo en el portafolio de la unidad.</div></td>
+          <td>Pendiente</td>
+        </tr>
+        <tr>
+          <td class="sem-num u2">9</td><td>16 Oct</td>
+          <td><div class="topic-unit">U2 · Apertura</div><div class="topic-title">Metodologías de auditoría</div><div class="topic-sub">Diagnóstico de saberes previos. Introducción a metodologías ISACA.</div></td>
+          <td>Pendiente</td>
+        </tr>
+        <tr>
+          <td class="sem-num u2">10</td><td>23 Oct</td>
+          <td><div class="topic-unit">U2 · Cierre parcial</div><div class="topic-title">Diseño de pruebas + Quiz</div><div class="topic-sub">Pruebas de cumplimiento acordes con las normas de auditoría. Quiz de metodologías.</div></td>
+          <td><span class="badge-eval">Evaluación 30%</span></td>
+        </tr>
+        <tr>
+          <td class="sem-num u2">11</td><td>30 Oct</td>
+          <td><div class="topic-unit">U2 · Fase de planeación</div><div class="topic-title">Plan de auditoría</div><div class="topic-sub">Entrega: documento con el plan de auditoría del caso de estudio.</div></td>
+          <td><span class="badge-entrega">Entrega</span></td>
+        </tr>
+        <tr>
+          <td class="sem-num u2">12</td><td>06 Nov</td>
+          <td><div class="topic-unit">U2 · Fase de ejecución</div><div class="topic-title">Artefactos de auditoría</div><div class="topic-sub">Aplicación de artefactos de auditoría según la metodología elegida.</div></td>
+          <td>Pendiente</td>
+        </tr>
+        <tr>
+          <td class="sem-num u2">13</td><td>13 Nov</td>
+          <td><div class="topic-unit">U2 · Evidencias</div><div class="topic-title">Recolección de hallazgos</div><div class="topic-sub">Entrega: aspectos evaluados y pruebas de auditoría del caso de estudio.</div></td>
+          <td><span class="badge-entrega">Entrega</span></td>
+        </tr>
+        <tr>
+          <td class="sem-num u2">14</td><td>20 Nov</td>
+          <td><div class="topic-unit">U2 · Informe</div><div class="topic-title">Estructura del informe de auditoría</div><div class="topic-sub">Cómo redactar hallazgos, no conformidades y recomendaciones.</div></td>
+          <td>Pendiente</td>
+        </tr>
+        <tr>
+          <td class="sem-num u2">15</td><td>27 Nov</td>
+          <td><div class="topic-unit">U2 · Taller</div><div class="topic-title">Consolidación del informe final</div><div class="topic-sub">Redacción del informe de auditoría completo sobre el caso de estudio.</div></td>
+          <td>Pendiente</td>
+        </tr>
+        <tr>
+          <td class="sem-num u2">16</td><td>04 Dic</td>
+          <td><div class="topic-unit">U2 · Cierre 🏁</div><div class="topic-title">Sustentación del informe de auditoría</div><div class="topic-sub">Sustentación en vivo + portafolio final.</div></td>
+          <td><span class="badge-eval">Evaluación 40%</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section class="on-cream" id="proyecto">
+  <div class="wrap">
+    <div class="eyebrow">Proyecto final · 60%</div>
+    <h2>Informe de <span style="color:var(--green)">auditoría de sistemas</span></h2>
+    <p class="lead">No pedimos un sistema perfecto para auditar — pedimos que tomes un caso concreto y demuestres, con evidencia, si cumple o no con lo que debería cumplir.</p>
+    <div class="project-grid">
+      <div class="project-card"><span class="emoji">🎯</span><h4>Caso de estudio</h4><p>Elige una organización real o un caso ficticio con sistemas de información claros: una tienda en línea, una entidad financiera, una EPS.</p></div>
+      <div class="project-card"><span class="emoji">🗺️</span><h4>Plan de auditoría</h4><p>Alcance, objetivos, normas de referencia (COBIT / ISO 27001) y cronograma — la fase de planeación documentada.</p></div>
+      <div class="project-card"><span class="emoji">⚠️</span><h4>Matriz de riesgos</h4><p>Activos de información, amenazas, vulnerabilidades y controles existentes, priorizados por impacto y probabilidad.</p></div>
+      <div class="project-card"><span class="emoji">🧪</span><h4>Pruebas de auditoría</h4><p>Evidencias recolectadas: checklists, entrevistas simuladas, revisión de configuraciones — la fase de ejecución.</p></div>
+      <div class="project-card"><span class="emoji">📄</span><h4>Informe de auditoría</h4><p>Hallazgos, no conformidades y recomendaciones redactados como los recibiría un gerente de tecnología real.</p></div>
+      <div class="project-card"><span class="emoji">📂</span><h4>Portafolio en GitHub</h4><p>Repositorio con el plan, la matriz de riesgos y el informe. El README explica el caso elegido y declara el uso de IA.</p></div>
+      <div class="project-card"><span class="emoji">🎤</span><h4>Sustentación en vivo · 10 min</h4><p>Presentas el caso, defiendes tus hallazgos y respondes: "¿por qué esta vulnerabilidad es crítica y esa otra no?"</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="eyebrow">Política de uso</div>
+    <h2>La IA como <span class="accent">copiloto</span>, no como auditor</h2>
+    <p class="lead">ChatGPT, Claude, Gemini y similares son herramientas válidas en este curso — con responsabilidad. El estudiante sigue siendo el autor y responsable de cada hallazgo que entrega.</p>
+    <div class="policy-grid">
+      <div class="policy-card ok">
+        <h4>✅ Uso permitido</h4>
+        <ul>
+          <li>Pedir que explique una norma, fase o concepto de auditoría</li>
+          <li>Que revise tu matriz de riesgos y señale huecos</li>
+          <li>Que ayude a redactar mejor un hallazgo manteniendo tu análisis</li>
+          <li>Generar ejemplos de amenazas o controles para practicar</li>
+          <li>Declarar el uso de IA en el README <b>(suma puntos)</b></li>
+        </ul>
+      </div>
+      <div class="policy-card no">
+        <h4>❌ Uso no permitido</h4>
+        <ul>
+          <li>"Hazme el informe de auditoría completo"</li>
+          <li>Entregar un informe que no puedes explicar</li>
+          <li>No saber por qué elegiste esa norma o ese control</li>
+          <li>Hallazgos idénticos entre distintos grupos</li>
+        </ul>
+      </div>
+      <div class="policy-card verify">
+        <h4>🔍 Cómo se verifica</h4>
+        <ul>
+          <li>Preguntas en la sustentación sobre cada hallazgo</li>
+          <li>"¿Por qué esta vulnerabilidad es crítica y no aquella?"</li>
+          <li>Pedir que ajuste un control o hallazgo en vivo</li>
+          <li>Explicar el hallazgo señalando la evidencia recolectada</li>
+        </ul>
+      </div>
+      <div class="policy-card key">
+        <h4>💡 La clave</h4>
+        <ul>
+          <li>La IA es un <b>tutor 24/7</b>, no el auditor del caso</li>
+          <li>En el trabajo real también usarás IA, pero deberás defender el hallazgo ante un cliente</li>
+          <li>Un hallazgo tuyo, aunque simple, vale más que uno de la IA</li>
+          <li>Declarar el uso de IA suma puntos — la transparencia se premia</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <img src="https://pascualbravo.edu.co/wp-content/uploads/2026/03/Logo-I.U.Pascual-Bravo_500-X-500-px.png" alt="Pascual Bravo"><br>
+  <div class="divider"></div>
+  <div class="line"><b>Institución Universitaria Pascual Bravo</b> · Facultad de Ingeniería · ET0114 Auditoría de Sistemas</div>
+  <div class="line">Docente: Mario Briceño Torres</div>
+  <div class="line">"Tradición – Transformación – Innovación" · Semestre 2026-II</div>
+</footer>
+
+</body>
+</html>
